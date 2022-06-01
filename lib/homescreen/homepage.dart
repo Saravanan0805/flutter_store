@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   Color bgColor = Colors.blue;
   int? indexNo;
   List<StoreList>? products;
+  List<StoreList>? value;
   @override
   void initState() {
     categoryListDB();
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Cart(productsList: products!)));
+                        builder: (context) => Cart(productsList: value!)));
               },
               icon: const Icon(Icons.shopping_bag_rounded))
         ],
@@ -79,6 +80,12 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<StoreList>> snapshot) {
                 if (snapshot.hasData) {
+                  if (value == null) {
+                    value = snapshot.data;
+                  } else {
+                    value = value;
+                  }
+
                   products = snapshot.data;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
