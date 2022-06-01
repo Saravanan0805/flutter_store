@@ -75,11 +75,9 @@ class _CartState extends State<Cart> {
                                       children: <Widget>[
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: ConstrainedBox(
-                                            constraints: const BoxConstraints(
-                                              maxWidth: 100,
-                                              maxHeight: 100,
-                                            ),
+                                          child: Container(
+                                            height: 50,
+                                            width: 50,
                                             child: Image.network(
                                                 widget
                                                     .productsList[(products
@@ -162,7 +160,7 @@ class _CartState extends State<Cart> {
                                           ],
                                         ),
                                         Container(
-                                          width: 80,
+                                          width: 60,
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
