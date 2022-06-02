@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_store/userAccount/account_page.dart';
 import 'homescreen/homepage.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         ),
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const AccountPage(),
       debugShowCheckedModeBanner: false,
     );
   }

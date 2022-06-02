@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_store/cart/cartPage.dart';
 import 'package:flutter_store/homescreen/db_class.dart';
 import 'package:flutter_store/homescreen/db_method.dart';
+import 'package:flutter_store/userAccount/account_page.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -45,7 +46,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawermenu(),
+      drawer: drawermenu(myaccount: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AccountPage()));
+      }),
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Fultter store'),
@@ -55,10 +59,12 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Cart(productsList: value!)));
+                value != null
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Cart(productsList: value!)))
+                    : snack(text: "wait till loading complete's..");
               },
               icon: const Icon(Icons.shopping_bag_rounded))
         ],
@@ -259,5 +265,17 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  snack({required String text}) {
+    final snackBar = SnackBar(
+      content: Text(text),
+      action: SnackBarAction(
+        label: 'ok',
+        onPressed: () {},
+      ),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

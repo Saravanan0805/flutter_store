@@ -2,17 +2,15 @@
 
 import 'package:flutter/material.dart';
 
-Drawer drawermenu(
-    /*{
-  required String username,
+Drawer drawermenu({
+  // required String username,
   required void Function()? myaccount,
-  required void Function()? mycampaign,
-  required void Function()? mywallet,
-  required void Function()? privacy,
-  required void Function()? help,
-  required void Function()? about,
-}*/
-    ) {
+  //required void Function()? mycampaign,
+  // required void Function()? mywallet,
+  //required void Function()? privacy,
+  //required void Function()? help,
+  //required void Function()? about,
+}) {
   return Drawer(
     child: ListView(
       children: <Widget>[
@@ -42,7 +40,7 @@ Drawer drawermenu(
                     color: Colors.indigo,
                   ),
                   menutiles(
-                    // ontap: myaccount,
+                    ontap: myaccount,
                     lead: Icons.account_circle_sharp,
                     title: 'My Accounts',
                   ),

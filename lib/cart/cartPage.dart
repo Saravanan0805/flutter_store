@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_store/cart/db_class_cart.dart';
 import 'package:flutter_store/homescreen/db_class.dart';
@@ -17,20 +16,12 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  String url = 'https://fakestoreapi.com/carts/1';
   HttpService httpService = HttpService();
   Future<dynamic>? products;
   @override
   void initState() {
-    getCartdb();
     super.initState();
-  }
-
-  Future<dynamic> getCartdb() async {
-    http.Response response =
-        await http.get(Uri.parse('https://fakestoreapi.com/carts/2'));
-    Map<String, dynamic> value = json.decode(response.body);
-    List<dynamic> products = value['products'];
-    print(products);
   }
 
   @override
@@ -46,7 +37,7 @@ class _CartState extends State<Cart> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder(
-              future: httpService.getCart('https://fakestoreapi.com/carts/2'),
+              future: httpService.getCart(url),
               builder: (BuildContext context,
                   AsyncSnapshot<List<CartProducts>> snapshot) {
                 if (snapshot.hasData) {
