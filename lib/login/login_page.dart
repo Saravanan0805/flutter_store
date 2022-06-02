@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_store/data_files/secure_file.dart';
-
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import '../homescreen/homepage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,8 +17,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
   final SecureStorage secureStorage = SecureStorage();
-  final username = TextEditingController();
-  final password = TextEditingController();
+  final username = TextEditingController(text: "johnd");
+  final password = TextEditingController(text: "m38rmF\$");
   bool hide = true;
   bool hidepass = false;
   bool pwd = false;
@@ -84,15 +86,46 @@ class _LoginPage extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(4)),
                     ),
                     onPressed: () {
-                      secureStorage.writeSecureData('logedin', 'true');
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                      FocusScope.of(context).unfocus();
+                      Future<void> userData(
+                          String username, String password) async {
+                        final response = await http.post(
+                          Uri.parse('https://fakestoreapi.com/auth/login'),
+                          headers: <String, String>{
+                            'Content-Type': 'application/json; charset=UTF-8',
+                          },
+                          body: jsonEncode(<String, String>{
+                            'username': username,
+                            'password': password,
+                          }),
+                        );
+
+                        if (response.statusCode == 200) {
+                          secureStorage.writeSecureData('logedin', 'true');
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
+                        } else {
+                          print(response.body);
+                          snack(text: response.body);
+                        }
+                      }
+
+                      setState(() {
+                        logincredts = userData(username.text, password.text);
+                      });
                     },
                     child: Text(
                       'Login',
                       style: TextStyle(fontSize: 17.0),
                     ),
                   ),
+                ),
+                space(),
+                Text(
+                  ' username: "johnd", password: "m38rmF\$"',
+                  style: TextStyle(fontSize: 15.0),
                 ),
                 extraspace(),
                 TextButton(
