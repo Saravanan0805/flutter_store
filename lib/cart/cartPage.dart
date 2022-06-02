@@ -18,7 +18,7 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   String url = 'https://fakestoreapi.com/carts/1';
   HttpService httpService = HttpService();
-  Future<dynamic>? products;
+  List<CartProducts>? products;
   @override
   void initState() {
     super.initState();
@@ -41,7 +41,7 @@ class _CartState extends State<Cart> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<CartProducts>> snapshot) {
                 if (snapshot.hasData) {
-                  List<CartProducts>? products = snapshot.data;
+                  products = snapshot.data;
                   return ListView(
                       children: products!
                           .map((CartProducts products) => Padding(

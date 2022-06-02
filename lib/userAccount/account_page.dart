@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class _AccountPageState extends State<AccountPage> {
   HttpService httpService = HttpService();
   String url = 'https://fakestoreapi.com/users/1';
   String picUrl = "https://randomuser.me/api/portraits/men/0.jpg";
-
+  List<UserDetails>? userData;
   @override
   void initState() {
     randomProfilegenerator();
@@ -24,6 +25,7 @@ class _AccountPageState extends State<AccountPage> {
 
   void randomProfilegenerator() {
     int no = Random().nextInt(90);
+
     setState(() {
       picUrl = "https://randomuser.me/api/portraits/men/$no.jpg";
     });
@@ -44,7 +46,7 @@ class _AccountPageState extends State<AccountPage> {
               builder: (BuildContext context,
                   AsyncSnapshot<List<UserDetails>> snapshot) {
                 if (snapshot.hasData) {
-                  List<UserDetails>? userData = snapshot.data;
+                  userData = snapshot.data;
                   return ListView(
                       children: userData!
                           .map(

@@ -5,6 +5,7 @@ import 'package:flutter_store/homescreen/db_class.dart';
 import 'package:flutter_store/homescreen/db_method.dart';
 import 'package:flutter_store/login/login_page.dart';
 import 'package:flutter_store/data_files/secure_file.dart';
+import 'package:flutter_store/products/products_page.dart';
 import 'package:flutter_store/userAccount/account_page.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -28,11 +29,11 @@ class _HomePageState extends State<HomePage> {
   List<StoreList>? products;
   List<StoreList>? value;
   final SecureStorage secureStorage = SecureStorage();
-
+  int loadingTimer = 0;
   @override
   void initState() {
     categoryListDB();
-
+    timer();
     super.initState();
   }
 
@@ -41,6 +42,17 @@ class _HomePageState extends State<HomePage> {
         .get(Uri.parse('https://fakestoreapi.com/products/categories'));
     setState(() {
       categories = json.decode(response.body);
+    });
+  }
+
+  void timer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (value != null) {
+        timer.cancel();
+        ScaffoldMessenger.of(context).clearSnackBars();
+      } else {
+        snack(text: 'Please wait');
+      }
     });
   }
 
@@ -187,76 +199,88 @@ class _HomePageState extends State<HomePage> {
                                               spreadRadius: 1.0)
                                         ],
                                       ),
-                                      child: Column(
-                                        children: [
-                                          const SizedBox(height: 10),
-                                          Container(
-                                            color: Colors.transparent,
-                                            height: 150,
-                                            width: 150,
-                                            child: Image.network(
-                                              products.image,
-                                              fit: BoxFit.contain,
-                                              loadingBuilder:
-                                                  (BuildContext context,
-                                                      Widget child,
-                                                      ImageChunkEvent?
-                                                          loadingProgress) {
-                                                if (loadingProgress == null) {
-                                                  return child;
-                                                }
-                                                return Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    value: loadingProgress
-                                                                .expectedTotalBytes !=
-                                                            null
-                                                        ? loadingProgress
-                                                                .cumulativeBytesLoaded /
-                                                            loadingProgress
-                                                                .expectedTotalBytes!
-                                                        : null,
-                                                  ),
-                                                );
-                                              },
-                                              errorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return const Center(
-                                                  child: Text('reload'),
-                                                );
-                                              },
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProductsPage(
+                                                          productDetails:
+                                                              products)));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            const SizedBox(height: 10),
+                                            Container(
+                                              color: Colors.transparent,
+                                              height: 150,
+                                              width: 150,
+                                              child: Image.network(
+                                                products.image,
+                                                fit: BoxFit.contain,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            loadingProgress) {
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  }
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      value: loadingProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? loadingProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              loadingProgress
+                                                                  .expectedTotalBytes!
+                                                          : null,
+                                                    ),
+                                                  );
+                                                },
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return const Center(
+                                                    child: Text('reload'),
+                                                  );
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                          ListTile(
-                                            title: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  products.category,
+                                            ListTile(
+                                              title: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    products.category,
+                                                    style: const TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.grey),
+                                                  ),
+                                                  Text(
+                                                    products.title.length > 30
+                                                        ? products.title
+                                                            .substring(0, 30)
+                                                        : products.title,
+                                                    textAlign: TextAlign.start,
+                                                    style: const TextStyle(
+                                                        fontSize: 14),
+                                                  ),
+                                                ],
+                                              ),
+                                              subtitle: Text(
+                                                  '₹ ${products.price.toString()}',
                                                   style: const TextStyle(
                                                       fontSize: 14,
-                                                      color: Colors.grey),
-                                                ),
-                                                Text(
-                                                  products.title.length > 30
-                                                      ? products.title
-                                                          .substring(0, 30)
-                                                      : products.title,
-                                                  textAlign: TextAlign.start,
-                                                  style: const TextStyle(
-                                                      fontSize: 14),
-                                                ),
-                                              ],
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black)),
                                             ),
-                                            subtitle: Text(
-                                                '₹ ${products.price.toString()}',
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.black)),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -284,6 +308,7 @@ class _HomePageState extends State<HomePage> {
 
   snack({required String text}) {
     final snackBar = SnackBar(
+      duration: const Duration(minutes: 10),
       content: Text(text),
       action: SnackBarAction(
         label: 'ok',

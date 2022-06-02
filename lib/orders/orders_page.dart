@@ -15,6 +15,11 @@ class _OrdersPageState extends State<OrdersPage> {
         title: const Text('My Orders'),
         centerTitle: true,
       ),
+      body: const SafeArea(
+        child: Center(
+          child: Text('No orders found'),
+        ),
+      ),
     );
   }
 }

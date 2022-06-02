@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_store/homescreen/homepage.dart';
 import 'package:flutter_store/login/login_page.dart';
 import 'package:flutter_store/data_files/secure_file.dart';
-
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 class SplashScreen extends StatefulWidget {
@@ -46,6 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
         if (value == 'true') {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => HomePage()));
+        } else if (value == null) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginPage()));
         } else {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
