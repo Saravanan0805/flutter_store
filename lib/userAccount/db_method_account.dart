@@ -12,7 +12,7 @@ class HttpService {
       var data = json.decode(response.body);
 
       List<dynamic> value = [data];
-      print(value);
+
       List<UserDetails> items = value
           .map(
             (item) => UserDetails.fromJson(item),

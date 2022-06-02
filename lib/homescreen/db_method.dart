@@ -11,8 +11,6 @@ class HttpService {
     if (response.statusCode == 200) {
       List<dynamic> value = json.decode(response.body);
 
-      /// print(value);
-      print(url);
       List<StoreList> items = value
           .map(
             (item) => StoreList.fromJson(item),

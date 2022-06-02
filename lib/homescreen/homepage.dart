@@ -40,15 +40,14 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       categories = json.decode(response.body);
     });
-    print(categories);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: drawermenu(myaccount: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AccountPage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const AccountPage()));
       }),
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -187,30 +186,38 @@ class _HomePageState extends State<HomePage> {
                                             color: Colors.transparent,
                                             height: 150,
                                             width: 150,
-                                            child: Image.network(products.image,
-                                                fit: BoxFit.contain,
-                                                loadingBuilder:
-                                                    (BuildContext context,
-                                                        Widget child,
-                                                        ImageChunkEvent?
-                                                            loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
-                                              return Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  value: loadingProgress
-                                                              .expectedTotalBytes !=
-                                                          null
-                                                      ? loadingProgress
-                                                              .cumulativeBytesLoaded /
-                                                          loadingProgress
-                                                              .expectedTotalBytes!
-                                                      : null,
-                                                ),
-                                              );
-                                            }),
+                                            child: Image.network(
+                                              products.image,
+                                              fit: BoxFit.contain,
+                                              loadingBuilder:
+                                                  (BuildContext context,
+                                                      Widget child,
+                                                      ImageChunkEvent?
+                                                          loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    value: loadingProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? loadingProgress
+                                                                .cumulativeBytesLoaded /
+                                                            loadingProgress
+                                                                .expectedTotalBytes!
+                                                        : null,
+                                                  ),
+                                                );
+                                              },
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                return const Center(
+                                                  child: Text('reload'),
+                                                );
+                                              },
+                                            ),
                                           ),
                                           ListTile(
                                             title: Column(
