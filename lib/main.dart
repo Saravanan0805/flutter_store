@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_store/splash_screen.dart';
+import 'package:flutter_store/data_files/splash_screen.dart';
 import 'package:flutter_store/userAccount/account_page.dart';
 import 'homescreen/homepage.dart';
 

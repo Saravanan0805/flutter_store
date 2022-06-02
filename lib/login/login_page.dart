@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:flutter_store/secure_file.dart';
+import 'package:flutter_store/data_files/secure_file.dart';
+
+import '../homescreen/homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -83,6 +85,8 @@ class _LoginPage extends State<LoginPage> {
                     ),
                     onPressed: () {
                       secureStorage.writeSecureData('logedin', 'true');
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
                     },
                     child: Text(
                       'Login',

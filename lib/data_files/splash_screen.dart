@@ -4,8 +4,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_store/homescreen/homepage.dart';
-import 'package:flutter_store/login_page.dart';
-import 'package:flutter_store/secure_file.dart';
+import 'package:flutter_store/login/login_page.dart';
+import 'package:flutter_store/data_files/secure_file.dart';
 
 import 'dart:convert';
 
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   String? logedIn;
 
   final SecureStorage secureStorage = SecureStorage();
-  Future<void>? getFollowersdb;
+
   @override
   void initState() {
     super.initState();

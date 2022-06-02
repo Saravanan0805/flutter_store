@@ -9,7 +9,7 @@ Drawer drawermenu({
   // required void Function()? mywallet,
   //required void Function()? privacy,
   //required void Function()? help,
-  //required void Function()? about,
+  required void Function()? logout,
 }) {
   return Drawer(
     child: ListView(
@@ -49,16 +49,7 @@ Drawer drawermenu({
                     lead: Icons.account_balance_wallet_rounded,
                     title: 'My Orders',
                   ),
-                  menutiles(
-                      //  ontap: privacy,
-                      lead: Icons.business_center,
-                      title: 'Privacy & Security'),
-                  menutiles(
-                      // ontap: help,
-                      lead: Icons.business_center,
-                      title: 'Feedback & Support '),
-                  menutiles(
-                      /*ontap: about,*/ lead: Icons.info, title: ' About'),
+                  menutiles(ontap: logout, lead: Icons.info, title: ' Log Out'),
                 ],
               ),
             ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_store/cart/cartPage.dart';
 import 'package:flutter_store/homescreen/db_class.dart';
 import 'package:flutter_store/homescreen/db_method.dart';
+import 'package:flutter_store/login/login_page.dart';
+import 'package:flutter_store/data_files/secure_file.dart';
 import 'package:flutter_store/userAccount/account_page.dart';
 import 'dart:async';
 import 'dart:convert';
@@ -19,14 +21,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HttpService httpService = HttpService();
-  Future<List<StoreList>>? getData;
   List<dynamic> categories = [''];
-  String? social;
   String url = 'https://fakestoreapi.com/products';
   Color bgColor = Colors.blue;
   int? indexNo;
   List<StoreList>? products;
   List<StoreList>? value;
+  final SecureStorage secureStorage = SecureStorage();
+
   @override
   void initState() {
     categoryListDB();
@@ -48,6 +50,12 @@ class _HomePageState extends State<HomePage> {
       drawer: drawermenu(myaccount: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const AccountPage()));
+      }, logout: () {
+        secureStorage.deleteSecureData('logedin');
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+            (route) => false);
       }),
       backgroundColor: Colors.white,
       appBar: AppBar(

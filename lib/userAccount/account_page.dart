@@ -34,6 +34,7 @@ class _AccountPageState extends State<AccountPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Account'),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(
