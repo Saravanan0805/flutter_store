@@ -21,6 +21,7 @@ class _CartState extends State<Cart> {
   List<CartProducts>? products;
   @override
   void initState() {
+    ScaffoldMessenger.of(context).clearSnackBars();
     super.initState();
   }
 

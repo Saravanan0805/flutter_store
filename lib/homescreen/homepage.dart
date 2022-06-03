@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: Scrollbar(
                           child: GridView.count(
-                            childAspectRatio: 3 / 4,
+                            childAspectRatio: 3.2 / 4.2,
                             crossAxisSpacing: 10,
                             mainAxisSpacing: 10,
                             crossAxisCount: 2,

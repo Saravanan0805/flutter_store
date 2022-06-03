@@ -20,6 +20,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     randomProfilegenerator();
+    ScaffoldMessenger.of(context).clearSnackBars();
     super.initState();
   }
 
