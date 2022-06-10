@@ -1,6 +1,6 @@
 # flutter_store
 
-A fake flutter store made using fakestoreapi with a simple login page, homepage, product details page and a cart page.
+A fake flutter store made using fakestoreapi with a simple login page, homepage, product details page, my account page and a cart page.
 
 ## Getting Started
 
